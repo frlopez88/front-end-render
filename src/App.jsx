@@ -2,32 +2,26 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { InicioSesion } from './ScreenComponents/InicioSesion'
+import { InfoComidas } from './ScreenComponents/InfoComidas'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [tokenInfo, setTokenInfo] = useState(window.localStorage.getItem("token-render"))
+
+  const [isLog, setIsLog] = useState(tokenInfo ? true : false)
+
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <BrowserRouter>
+        <Routes>
+          {isLog ? <Route path='/' element={<InfoComidas tokenInfo={tokenInfo} />} />
+            : <Route path='/' element={<InicioSesion />} />}
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
